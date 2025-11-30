@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LoanCalculator Documentation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        h1, h2, h3 { color: #2E86C1; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 4px; }
+        table { border-collapse: collapse; width: 80%; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+
+<h1>LoanCalculator Project Documentation</h1>
+<p>Small project to calculate loan EMIs (Equated Monthly Installments).</p>
+
+<h2>Classes</h2>
+<h3>LoanCalculator</h3>
+<p>Handles calculation of EMI and total repayment for a loan.</p>
+
+<h4>Public Methods</h4>
+<table>
+    <tr>
+        <th>Function</th>
+        <th>Description</th>
+        <th>Parameters</th>
+        <th>Return</th>
+    </tr>
+    <tr>
+        <td><code>LoanCalculator(double amount, double interest, int period)</code></td>
+        <td>Constructor to initialize loan details.</td>
+        <td>
+            <ul>
+                <li>amount: Principal loan amount</li>
+                <li>interest: Interest rate per period (as decimal, e.g., 0.01 for 1%)</li>
+                <li>period: Total number of periods (months)</li>
+            </ul>
+        </td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td><code>double calculateEMI()</code></td>
+        <td>Calculates monthly EMI.</td>
+        <td>None</td>
+        <td>EMI amount as <code>double</code></td>
+    </tr>
+    <tr>
+        <td><code>double totalRepayment()</code></td>
+        <td>Calculates total repayment over the loan tenure.</td>
+        <td>None</td>
+        <td>Total repayment amount as <code>double</code></td>
+    </tr>
+</table>
+
+<h2>Tests</h2>
+<p>Unit tests written using GoogleTest:</p>
+<ul>
+    <li><b>Normal EMI calculation:</b> Checks EMI calculation for standard loan.</li>
+    <li><b>Invalid input handling:</b> Ensures zero or negative inputs return 0 or error.</li>
+    <li><b>Large tenure calculations:</b> Checks EMI calculation for large number of periods without overflow.</li>
+</ul>
+
+<h2>File Structure</h2>
+<pre>
+calculator/
+├── include/LoanCalculator.h
+├── src/LoanCalculator.cpp
+├── tests/test_LoanCalculator.cpp
+├── docs/index.html
+├── CMakeLists.txt
+</pre>
+
+</body>
+</html>

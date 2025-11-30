@@ -1,53 +1,105 @@
-A simple loan calculator written in C++ using a Qt GUI.
+Loan Calculator (C++ CLI)
 
-Can be compiled with either make or SCons as follows:
-# make
--- OR --
-# scons
+Project Overview
+----------------
+This is a simple C++ loan/EMI calculator that works in the command line.
+It can calculate monthly payments (EMI), total interest, and loan balances.
 
-The following can be calculated given the correct inputs:
-- Monthly Payment
-- Amount
-- Interest
-- Number of payments
-- Balance
+Refactor Highlights:
+- Checks for invalid or negative input
+- Uses config.txt for default settings
+- Uses safe math with long double to avoid overflow
+- Code is organized in separate files (Loan class)
+- Includes GoogleTest unit tests
+- Includes Doxygen documentation
 
-Inputs are the following and should be supplied depending on the aforementioned calculation type:
-- Amount
-- Initial Payment
-- Loan Fee %
-- Interest %
-- Payment
-- Months
+Directory Structure
+-------------------
+legacy-calc-2009/
+├── src/
+│   ├── main.cpp       # Main program
+│   ├── Loan.h         # Loan class header
+│   └── Loan.cpp       # Loan class code
+├── test/
+│   └── test_emi.cpp   # Unit tests using GoogleTest
+├── config.txt         # Default loan settings
+├── docs/              # Doxygen HTML documentation
+├── Doxyfile           # Doxygen configuration
+├── README.txt         # This file
+└── REPORT.pdf         # Assignment report
 
-Usage:
-Input values:
-   -N Set the total loan period in months. Ej: 60
-   -a Set the initial amount. Ej: 19300
-   -ai Set the initial payment, loan will be for (initial amount - initial
-       payment) Ej: 1000, Default 0.0
-   -ca Calculate the initial loan amount, given: monthly payment, loan period,
-       and interest
-   -cb Calculate the loan balance after making several payments, given:
-       loan amount, interest, monthly payment and number of
-       monthly payments made so far
-   -ci Calculate the loan interest, given: loan amount, loan period,
-       and monthly payment
-   -cn Calculate the number of payments needed to pay a loan, given:
-       loan amount, monthly payment, interest
-   -cp Calculate the monthly loan payment, given: loan amount, loan period,
-       and interest
-   -i Set the yearly interest rate. Ej: 6.75
-   -n Set the elapsed period in months. Ej: 32
-   -of Set fees for opening the loan. Ej: 100, Default 0.0
-   -op Set fees for opening the loan, charged as a percentage.
-       Ej: 2.75%, Default 0.0%
-   -p Set the monthly loan payment. Ej: 325.67
+Features
+--------
+- Calculate monthly payment (EMI)
+- Calculate total interest
+- Calculate loan balance after some payments
+- Works with long loan periods without errors
+- Validates input to prevent mistakes
+- Can read default values from config.txt
 
-Calculations: Mutually Exclusive options, one and only one can be set:
-  -cb -cp -cn -ca -ci 
+Build Instructions
+------------------
+To build the project:
 
-Use one of the following options to display this message:
-   -h -help --h --help -?
+# Using make
+make
 
-With no options set, a GUI will be launched
+# Or manually
+g++ -std=c++11 src/*.cpp -o calc
+
+Command-Line Usage
+-----------------
+Example: Calculate monthly payment for a $100,000 loan at 12% interest for 360 months:
+
+./calc -cp -a 100000 -i 12 -N 360
+
+Options
+-------
+-a     Loan amount                     Example: -a 100000
+-ai    Initial payment (default 0.0)  Example: -ai 5000
+-i     Annual interest rate (%)        Example: -i 12
+-N     Loan period in months           Example: -N 360
+-n     Number of months passed        Example: -n 32
+-p     Monthly payment                 Example: -p 1200
+-of    Loan opening fee (fixed)        Example: -of 100
+-op    Loan opening fee (%)            Example: -op 2.5
+
+Calculation Modes (choose only one)
+----------------------------------
+-cp    Calculate monthly payment
+-ca    Calculate loan amount
+-ci    Calculate total interest
+-cn    Calculate number of payments
+-cb    Calculate balance after payments
+
+Help Options
+------------
+-h, -help, --h, --help, -?     Show help message
+
+Configuration File
+------------------
+config.txt can set default values like:
+- Interest rate
+- Opening fees
+- Other loan settings
+
+Unit Tests
+----------
+Tests are provided using GoogleTest:
+- EMI calculation
+- Input validation
+- Long loan periods
+
+To run tests:
+
+g++ -std=c++11 -isystem <gtest_include_path> -pthread test/test_emi.cpp src/*.cpp -o test_calc
+./test_calc
+
+Doxygen Documentation
+---------------------
+Doxygen comments are in the code. Generate HTML docs:
+
+doxygen Doxyfile
+
+Docs are in the docs/ folder.
+

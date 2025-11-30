@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <math.h>
 #include <stdexcept>
@@ -22,14 +21,6 @@ LoanCalculator::LoanCalculator() :
 {
 }
 
-//
-// The actual calculation methods
-//
-
-/**
- * Loan balance after n payments have been made:
- *   B_n = A*(1+i)^n - (P/i)*((1+i)^n - 1)
- */
 float LoanCalculator::calculateLoanBalance()
 {
   if(!amountSet_ || !interestSet_ || !periodElapsedSet_ || !paymentSet_)
@@ -41,10 +32,6 @@ float LoanCalculator::calculateLoanBalance()
          (payment_/interestPeriodic_)*(pow((1+interestPeriodic_), periodElapsed_)-1);
 }
 
-/**
- * Payment amount on a loan:
- *   P = i*A / (1 - (1+i)^-N)
- */
 float LoanCalculator::calculatePayment()
 {
   if(!amountSet_ || !interestSet_ || !periodTotalSet_)
@@ -59,14 +46,6 @@ float LoanCalculator::calculatePayment()
          (1 - pow((1+interestPeriodic_), (-1*periodTotal_)));
 }
 
-/**
- * Number of payments on a loan:
- *   N = -log(1-i*A/P) / log(1+i)
- *      (You can use any logarithm base, as long as both logs use the same base.)
- *      Aunt Sally offers to lend you $3500 at 6% for that new home theater system you want.
- *      If you pay her back $100 a month, how long will it take?
- *      Solution:  6% per year is 0.5% per month, or 0.005. P = 100 and A = 3500. N = 38.57
- */
 float LoanCalculator::calculateNumberPayments()
 {
   if(!amountSet_ || !interestSet_ || !paymentSet_)
@@ -78,10 +57,6 @@ float LoanCalculator::calculateNumberPayments()
          log10(1.0 + interestPeriodic_);
 }
 
-/**
- * Original loan amount:
- *   A = (P/i)*(1 - (1+i)^-N)
- */
 float LoanCalculator::calculateLoanAmount()
 {
   if(!paymentSet_ || !interestSet_ || !periodTotalSet_)
@@ -93,11 +68,6 @@ float LoanCalculator::calculateLoanAmount()
          (1 - pow((1+interestPeriodic_), (-1*periodTotal_)));
 }
 
-/**
- * Interest Rate:
- *   i = (((1 + P/A)^(1/q) - 1 )^q - 1)  NOTICE: This is an approximate not an exact solution
- *   where q = log(1+1/N) / log(2)
-*/
 float LoanCalculator::calculateInterestRate()
 {
   if(!amountSet_ || !paymentSet_ || !periodTotalSet_)
@@ -131,8 +101,6 @@ std::string LoanCalculator::toString()
 {
   stringstream ss;
 
-  //ss << "LoanCalculator set values:\n";
-
   if(amountSet_)
   {
     ss << "Initial Amount:      " << amount_ << "\n";
@@ -147,8 +115,6 @@ std::string LoanCalculator::toString()
   if(interestSet_)
   {
     ss << "Yearly Interest:     " << interest_ << "%\n";
-    //ss << "Yearly Interest:     " << interest_
-    //   << "\nMonthly Interest:    " << interestPeriodic_ << "\n";
   }
 
   if(paymentSet_)

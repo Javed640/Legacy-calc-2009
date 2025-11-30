@@ -97,51 +97,21 @@ float LoanCalculator::calculateEffectiveInterestRate()
   return monthlyInterest*12*100;
 }
 
-std::string LoanCalculator::toString()
-{
-  stringstream ss;
-
-  if(amountSet_)
-  {
-    ss << "Initial Amount:      " << amount_ << "\n";
-  }
-
-  if(initialPayment_ != 0.0)
-  {
-    ss << "Initial Payment:     " << initialPayment_ << "\n";
-    ss << "Actual Loan Amount:  " << (amount_ - initialPayment_) << "\n";
-  }
-
-  if(interestSet_)
-  {
-    ss << "Yearly Interest:     " << interest_ << "%\n";
-  }
-
-  if(paymentSet_)
-  {
-    ss << "Monthly payment:     " << payment_ << "\n";
-  }
-
-  if(periodTotalSet_)
-  {
-    ss << "Loan Period:         " << periodTotal_ << " months\n";
-  }
-
-  if(periodElapsedSet_)
-  {
-    ss << "Elapsed Period:      " << periodElapsed_ << " months\n";
-  }
-
-  if(openingFee_ != 0.0)
-  {
-      ss << "Opening Fee:       " << openingFee_ << "\n";
-  }
-
-  if(openingPercent_ != 0.0)
-  {
-    ss << "Opening Fee %:       " << openingPercent_ << "% = "
-       << openingPercent_/100*(amount_ - initialPayment_) << "\n";
-  }
-
-  return ss.str();
-}
+std::string Loan::toString() const { 
+    if (!fieldsSet) { 
+        return "Loan fields are not properly set"; 
+    } 
+     
+    std::stringstream ss; 
+    ss << std::fixed << std::setprecision(2); 
+    ss << "Principal: $" << principal << "\n" 
+       << "Annual Interest Rate: " << annualInterestRate << "%\n" 
+       << "Tenure: " << tenureMonths << " months\n" 
+       << "Monthly Fee: $" << monthlyFee << "\n" 
+       << "Upfront Fee: $" << upfrontFee << "\n" 
+       << "Monthly Payment: $" << calculateEMI() << "\n" 
+       << "Total Payment: $" << getTotalPayment() << "\n" 
+       << "Total Interest: $" << getTotalInterest(); 
+     
+    return ss.str(); 
+} 

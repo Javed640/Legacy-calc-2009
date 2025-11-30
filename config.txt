@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.10)
+project(LoanCalculatorProject LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+include_directories(include)
+
+# GoogleTest
+add_subdirectory(lib/googletest)
+include_directories(lib/googletest/googletest/include)
+
+# Unit tests
+add_executable(MyLoanTests
+    tests/test_LoanCalculator.cpp
+    src/LoanCalculator.cpp
+)
+
+target_link_libraries(MyLoanTests gtest gtest_main)
+
+enable_testing()
+add_test(NAME LoanCalculatorTests COMMAND MyLoanTests)
